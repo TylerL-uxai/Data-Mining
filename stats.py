@@ -117,12 +117,6 @@ def getBattleSide(area, side):
 		print ("# 2v2")
 		return
 
-	if trophies == 'NoneType':
-		print ("# 2v2")
-		return
-	else:
-		battles[u'trophies'] = trophies
-
 	battles[u'troops'] = {}
 
 	troops = side.find_all('div', {'class':'replay__card'})
@@ -150,7 +144,7 @@ def getBattles(tag, refresh=True):
 
 	for area in environment:
 		battle = {}
-		# battle[u'event'] = area['data-type']
+		battle[u'type'] = area['data-type']
 
 		outcome = area.find('div', {'class':'replay__win ui__headerExtraSmall'})
 
@@ -392,11 +386,57 @@ def getBestCharacter(personsTag):
 			print ("# blah")
 
 
+def mineData(playersTag):
+	refresh(tag=playersTag, element='profile')
+	sleep(1.1)
+	refresh(tag=playersTag, element='battles')
+	sleep(1.1)
+	battles = getBattles(tag=playersTag, refresh=False)
+	battlesLength = len(battles)
+	for idx, x in enumerate(reversed(battles)):
+		# Check if battle was within 48 hours
+		try:
+			if "month" in x['left']['date'] or "year" in x['left']['date'] or "weeks" in x['left']['date'] or "days" in x['left']['date']:
+				print ("# more than a day ago")
+				continue
+			else:
+				print ("Within 48 hours")
+		except TypeError:
+			break
 
-with open('./ClashRoyale.csv','w') as newFile:
+		# TODO check minimum rank to account for skill level
+
+		# Make sure it's a ladder battle
+		if (battles[idx]['type'] != 'ladder'):
+			print ("Battle is not a ladder battle")
+			continue
+
+		print(battles[idx])
+		# left side
+		leftPlayerID = battles[idx]['left']['id']
+		leftPlayerCharacters = ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())
+		if (battles[idx]['outcome'] == 'victory'):
+			winOrLose = 1
+		elif (battles[idx]['outcome'] == 'defeat'):
+			winOrLose = 0
+		with open('./data/ClashRoyale.csv','a') as newFile:
+			newFileWriter = csv.writer(newFile)
+			newFileWriter.writerow([leftPlayerID, leftPlayerCharacters, winOrLose])
+
+		# right side
+		rightPlayersID = battles[idx]['right']['id']
+		rightPlayerCharacters = ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())
+		with open('./data/ClashRoyale.csv','a') as newFile:
+			newFileWriter = csv.writer(newFile)
+			newFileWriter.writerow([rightPlayersID, rightPlayerCharacters, int(not winOrLose)])
+
+
+
+with open('./data/ClashRoyale.csv','w') as newFile:
     newFileWriter = csv.writer(newFile)
     newFileWriter.writerow(['PlayerID', 'Characters', 'Win or Lose'])
 
+mineData('2GRG822L9')
 
 '''personIDs = ['JR2GYY2Q','R0CRRUVU', 'R99CVRYR', 'JQC8RLG8', 'JPR9RGGP', 'PCCJCV9U', 'JU2LP8QG', 'R02CPVG', '20RRGQQ02', 'QPQ9U9L2', 'JUJCVP9Y', '2J099YJ2R', 'QPL0VR2R', '20Q20QYCV', '90PYJPG8', 'RY202JP', '22Y8UJL08', 'VL9J8989', '20QRGV9PL', 'Y8PR0QU8', 'PR2YCUCQ', 'LJJ00GCG', 'GPPL0P99', 'RJPLVY08', '9J2G8G92', 'YQ0JUL0U']
 for idx, x in enumerate(personIDs):
