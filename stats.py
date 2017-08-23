@@ -407,14 +407,13 @@ def mineData(playersTag):
 		# TODO check minimum rank to account for skill level
 
 		# Make sure it's a ladder battle
-		if (battles[idx]['type'] != 'ladder'):
-			print ("Battle is not a ladder battle")
+		if (x['type'] != 'ladder'):
+			print ("Battle is not a ladder battle. Battle type: ", x['type'])
 			continue
 
-		print(battles[idx])
 		# left side
-		leftPlayerID = battles[idx]['left']['id']
-		leftPlayerCharacters = ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())
+		leftPlayerID = x['left']['id']
+		leftPlayerCharacters = ' '.join('{}{},'.format(unit, level) for unit, level in x['left']['troops'].items())
 		if (battles[idx]['outcome'] == 'victory'):
 			winOrLose = 1
 		elif (battles[idx]['outcome'] == 'defeat'):
@@ -424,8 +423,8 @@ def mineData(playersTag):
 			newFileWriter.writerow([leftPlayerID, leftPlayerCharacters, winOrLose])
 
 		# right side
-		rightPlayersID = battles[idx]['right']['id']
-		rightPlayerCharacters = ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())
+		rightPlayersID = x['right']['id']
+		rightPlayerCharacters = ' '.join('{}{},'.format(unit, level) for unit, level in x['right']['troops'].items())
 		with open('./data/ClashRoyale.csv','a') as newFile:
 			newFileWriter = csv.writer(newFile)
 			newFileWriter.writerow([rightPlayersID, rightPlayerCharacters, int(not winOrLose)])
@@ -436,7 +435,7 @@ with open('./data/ClashRoyale.csv','w') as newFile:
     newFileWriter = csv.writer(newFile)
     newFileWriter.writerow(['PlayerID', 'Characters', 'Win or Lose'])
 
-mineData('2GRG822L9')
+mineData('P22QQVU')
 
 '''personIDs = ['JR2GYY2Q','R0CRRUVU', 'R99CVRYR', 'JQC8RLG8', 'JPR9RGGP', 'PCCJCV9U', 'JU2LP8QG', 'R02CPVG', '20RRGQQ02', 'QPQ9U9L2', 'JUJCVP9Y', '2J099YJ2R', 'QPL0VR2R', '20Q20QYCV', '90PYJPG8', 'RY202JP', '22Y8UJL08', 'VL9J8989', '20QRGV9PL', 'Y8PR0QU8', 'PR2YCUCQ', 'LJJ00GCG', 'GPPL0P99', 'RJPLVY08', '9J2G8G92', 'YQ0JUL0U']
 for idx, x in enumerate(personIDs):
