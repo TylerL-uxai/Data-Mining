@@ -95,7 +95,7 @@ def getBattleSide(area, side):
 	try:
 		battles[u'date'] = area.find('div', {'class': 'replay__date ui__smallText'}).get_text()
 	except TypeError:
-		print "# date error"
+		print ("# date error")
 		return
 	battles[u'id'] = side.find('a', {'class':'ui__link'})['href'][9:]
 	username = side.find('div', {'class':'replay__userName'}).get_text()
@@ -114,11 +114,11 @@ def getBattleSide(area, side):
 		trophies = side.find('div', {'class':'replay__trophies'}).get_text()
 		trophies = int(trophies.lstrip().rstrip())
 	except AttributeError:
-		print "# 2v2"
+		print ("# 2v2")
 		return
 
 	if trophies == 'NoneType':
-		print "# 2v2"
+		print ("# 2v2")
 		return
 	else:
 		battles[u'trophies'] = trophies
@@ -246,7 +246,7 @@ def getData(personsTag):
 	#print(x['right']['trophies'], [str(item) for item in s])
 		try:
 			if "month" in x['left']['date'] or "year" in x['left']['date'] or "weeks" in x['left']['date'] or "days" in x['left']['date']:
-				print "# more than a week ago"
+				print ("# more than a week ago")
 				continue
 		except TypeError:
 			break
@@ -256,8 +256,8 @@ def getData(personsTag):
 				newFileWriter = csv.writer(newFile)
 				newFileWriter.writerow(['# Player Name: ' + x['left']['username'].encode('ascii', 'ignore').decode('ascii') + ' PlayerID: ' +  x['left']['id']])
 				newFileWriter.writerow(['2017-07-26', rank,' ']) # rank should be zero starting out
-			print "# ", x['left']['username']
-			print "2017-07-26, ",
+			print ("# ", x['left']['username'])
+			print ("2017-07-26, ",)
 		elif x['left']['trophies'] < 3000:
 			break
 
@@ -266,38 +266,38 @@ def getData(personsTag):
 				with open('../weight-loss/tyler.csv', 'a') as newFile:
 					newFileWriter = csv.writer(newFile)
 					newFileWriter.writerow(['# friendly battle ' + str(x['left']['trophies']) + ' ' + str(list(reversed(battles))[idx - 1]['left']['trophies'])])
-				print "# friendly battle ", x['left']['trophies'], list(reversed(battles))[idx - 1]['left']['trophies']
+				print ("# friendly battle ", x['left']['trophies'], list(reversed(battles))[idx - 1]['left']['trophies'])
 			elif int(x['left']['trophies']) - int(list(reversed(battles))[idx - 1]['left']['trophies']) > 99 or int(list(reversed(battles))[idx - 1]['left']['trophies']) - int(x['left']['trophies']) > 99:
-				print "# battle difference greater than 99"
+				print ("# battle difference greater than 99")
 				break
 			elif  x['left']['trophies'] > 3000:
 				with open('../weight-loss/tyler.csv', 'a') as newFile:
 					newFileWriter = csv.writer(newFile)
 					if x[u'outcome'] == 'victory':
 						rank += 25
-						print "2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())
+						print ("2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items()))
 						newFileWriter = csv.writer(newFile)
 						newFileWriter.writerow(['2017-07-26', rank, ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())])
 						rank -= 25
-						print "2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())
+						print ("2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items()))
 						newFileWriter = csv.writer(newFile)
 						newFileWriter.writerow(['2017-07-26', rank, ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())])
 					elif x[u'outcome'] == 'defeat':
 						rank -= 25
-						print "2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())
+						print ("2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items()))
 						newFileWriter = csv.writer(newFile)
 						newFileWriter.writerow(['2017-07-26', rank, ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())])
 						rank += 25
 						newFileWriter = csv.writer(newFile)
 						newFileWriter.writerow(['2017-07-26', rank, ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())])
-						print "2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())
+						print ("2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items()))
 
 
 
 		if x['right']['id'] not in listIDs and x['right']['id'] not in personIDs:
 			listIDs.append(x['right']['id'])
 		else:
-			print "duplicate" , x['right']['id']
+			print ("duplicate" , x['right']['id'])
 	arr = [str(r) for r in listIDs]
 	# print arr
 
@@ -321,7 +321,7 @@ def getEveryonesData(personsTag):
 	#print(x['right']['trophies'], [str(item) for item in s])
 		try:
 			if "month" in x['left']['date'] or "year" in x['left']['date'] or "weeks" in x['left']['date'] or "days" in x['left']['date']:
-				print "# more than a week ago"
+				print ("# more than a week ago")
 				continue
 		except TypeError:
 			break
@@ -331,8 +331,8 @@ def getEveryonesData(personsTag):
 				newFileWriter = csv.writer(newFile)
 				newFileWriter.writerow(['# Player Name: ' + x['left']['username'].encode('ascii', 'ignore').decode('ascii') + ' PlayerID: ' +  x['left']['id']])
 				newFileWriter.writerow(['2017-07-26', rank,' ']) # rank should be zero starting out
-			print "# ", x['left']['username']
-			print "2017-07-26, ",
+			print ("# ", x['left']['username'])
+			print ("2017-07-26, ")
 		elif x['left']['trophies'] < 3000:
 			break
 
@@ -341,31 +341,31 @@ def getEveryonesData(personsTag):
 				with open('../weight-loss/tyler.csv', 'a') as newFile:
 					newFileWriter = csv.writer(newFile)
 					newFileWriter.writerow(['# friendly battle ' + str(x['left']['trophies']) + ' ' + str(list(reversed(battles))[idx - 1]['left']['trophies'])])
-				print "# friendly battle ", x['left']['trophies'], list(reversed(battles))[idx - 1]['left']['trophies']
+				print ("# friendly battle ", x['left']['trophies'], list(reversed(battles))[idx - 1]['left']['trophies'])
 			elif int(x['left']['trophies']) - int(list(reversed(battles))[idx - 1]['left']['trophies']) > 99 or int(list(reversed(battles))[idx - 1]['left']['trophies']) - int(x['left']['trophies']) > 99:
-				print "# battle difference greater than 99"
+				print ("# battle difference greater than 99")
 				break
 			elif  x['left']['trophies'] > 3000:
 				with open('../weight-loss/tyler.csv', 'a') as newFile:
 					newFileWriter = csv.writer(newFile)
 					if x[u'outcome'] == 'victory':
 						rank += 25
-						print "2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())
+						print ("2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items()))
 						newFileWriter = csv.writer(newFile)
 						newFileWriter.writerow(['2017-07-26', rank, ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())])
 						rank -= 25
-						print "2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())
+						print ("2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items()))
 						newFileWriter = csv.writer(newFile)
 						newFileWriter.writerow(['2017-07-26', rank, ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())])
 					elif x[u'outcome'] == 'defeat':
 						rank -= 25
-						print "2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())
+						print ("2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items()))
 						newFileWriter = csv.writer(newFile)
 						newFileWriter.writerow(['2017-07-26', rank, ' '.join('{}{}'.format(unit, level) for unit, level in x['left']['troops'].items())])
 						rank += 25
 						newFileWriter = csv.writer(newFile)
 						newFileWriter.writerow(['2017-07-26', rank, ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())])
-						print "2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items())
+						print ("2017-07-26, ", rank, ", ", ' '.join('{}{}'.format(unit, level) for unit, level in x['right']['troops'].items()))
 
 
 
@@ -380,37 +380,38 @@ def getBestCharacter(personsTag):
 			if idx > 0:
 				if battles[idx]['left']['trophies'] > 1000:
 					if battles[idx]['left']['trophies'] < 7000:
-						print "# found"
-						print  "2017-07-26, ", battles[idx-1]['left']['trophies']
-						print  "2017-07-26, ", x['left']['trophies'], ", ", ' '.join(x['right']['troops'])
+						print ("# found")
+						print  ("2017-07-26, ", battles[idx-1]['left']['trophies'])
+						print  ("2017-07-26, ", x['left']['trophies'], ", ", ' '.join(x['right']['troops']))
 					else:
-						print "# greater than or equal to 7000"
+						print ("# greater than or equal to 7000")
 				else:
-					print "# less than 1000"
+					print ("# less than 1000")
 					next
 		else:
-			print "# blah"
+			print ("# blah")
 
 
 
-with open('../weight-loss/tyler.csv','w') as newFile:
+with open('./ClashRoyale.csv','w') as newFile:
     newFileWriter = csv.writer(newFile)
-    newFileWriter.writerow(['date','trophies','characters'])
+    newFileWriter.writerow(['PlayerID', 'Characters', 'Win or Lose'])
 
-personIDs = ['JR2GYY2Q','R0CRRUVU', 'R99CVRYR', 'JQC8RLG8', 'JPR9RGGP', 'PCCJCV9U', 'JU2LP8QG', 'R02CPVG', '20RRGQQ02', 'QPQ9U9L2', 'JUJCVP9Y', '2J099YJ2R', 'QPL0VR2R', '20Q20QYCV', '90PYJPG8', 'RY202JP', '22Y8UJL08', 'VL9J8989', '20QRGV9PL', 'Y8PR0QU8', 'PR2YCUCQ', 'LJJ00GCG', 'GPPL0P99', 'RJPLVY08', '9J2G8G92', 'YQ0JUL0U']
+
+'''personIDs = ['JR2GYY2Q','R0CRRUVU', 'R99CVRYR', 'JQC8RLG8', 'JPR9RGGP', 'PCCJCV9U', 'JU2LP8QG', 'R02CPVG', '20RRGQQ02', 'QPQ9U9L2', 'JUJCVP9Y', '2J099YJ2R', 'QPL0VR2R', '20Q20QYCV', '90PYJPG8', 'RY202JP', '22Y8UJL08', 'VL9J8989', '20QRGV9PL', 'Y8PR0QU8', 'PR2YCUCQ', 'LJJ00GCG', 'GPPL0P99', 'RJPLVY08', '9J2G8G92', 'YQ0JUL0U']
 for idx, x in enumerate(personIDs):
 	#getBestCharacter(personIDs[idx])
 	listIDs = getData(personIDs[idx])
 
 
-print "# Getting everyone else", personIDs
-print "# ", listIDs
+print ("# Getting everyone else", personIDs)
+print ("# ", listIDs)
 for idx, x in enumerate(listIDs):
  	#refresh(listIDs[idx], element='profile')
 	#refresh(listIDs[idx], element='battles')
 	# getEveryonesData(listIDs[idx])
 	getEveryonesData(listIDs[idx])
-
+'''
 #print(battles[0])
 #print(battles[0]['result']['wins'])
 #print(battles[0]['left']['troops']['skeleton_horde'])
