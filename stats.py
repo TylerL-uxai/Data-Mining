@@ -414,9 +414,9 @@ def mineData(playersTag):
 		# left side
 		leftPlayerID = x['left']['id']
 		leftPlayerCharacters = ' '.join('{}{},'.format(unit, level) for unit, level in x['left']['troops'].items())
-		if (battles[idx]['outcome'] == 'victory'):
+		if (x['outcome'] == 'victory'):
 			winOrLose = 1
-		elif (battles[idx]['outcome'] == 'defeat'):
+		elif (x['outcome'] == 'defeat'):
 			winOrLose = 0
 		with open('./data/ClashRoyale.csv','a') as newFile:
 			newFileWriter = csv.writer(newFile)
@@ -433,14 +433,15 @@ def mineData(playersTag):
 
 with open('./data/ClashRoyale.csv','w') as newFile:
     newFileWriter = csv.writer(newFile)
-    newFileWriter.writerow(['PlayerID', 'Characters', 'Win or Lose'])
+    newFileWriter.writerow(['PlayerID', 'Characters', 'Result'])
 
 mineData('P22QQVU')
 
-'''personIDs = ['JR2GYY2Q','R0CRRUVU', 'R99CVRYR', 'JQC8RLG8', 'JPR9RGGP', 'PCCJCV9U', 'JU2LP8QG', 'R02CPVG', '20RRGQQ02', 'QPQ9U9L2', 'JUJCVP9Y', '2J099YJ2R', 'QPL0VR2R', '20Q20QYCV', '90PYJPG8', 'RY202JP', '22Y8UJL08', 'VL9J8989', '20QRGV9PL', 'Y8PR0QU8', 'PR2YCUCQ', 'LJJ00GCG', 'GPPL0P99', 'RJPLVY08', '9J2G8G92', 'YQ0JUL0U']
+'''
+personIDs = ['JR2GYY2Q','R0CRRUVU', 'R99CVRYR', 'JQC8RLG8', 'JPR9RGGP', 'PCCJCV9U', 'JU2LP8QG', 'R02CPVG', '20RRGQQ02', 'QPQ9U9L2', 'JUJCVP9Y', '2J099YJ2R', 'QPL0VR2R', '20Q20QYCV', '90PYJPG8', 'RY202JP', '22Y8UJL08', 'VL9J8989', '20QRGV9PL', 'Y8PR0QU8', 'PR2YCUCQ', 'LJJ00GCG', 'GPPL0P99', 'RJPLVY08', '9J2G8G92', 'YQ0JUL0U']
 for idx, x in enumerate(personIDs):
 	#getBestCharacter(personIDs[idx])
-	listIDs = getData(personIDs[idx])
+	listIDs = mineData(personIDs[idx])
 
 
 print ("# Getting everyone else", personIDs)
@@ -451,10 +452,5 @@ for idx, x in enumerate(listIDs):
 	# getEveryonesData(listIDs[idx])
 	getEveryonesData(listIDs[idx])
 '''
-#print(battles[0])
-#print(battles[0]['result']['wins'])
-#print(battles[0]['left']['troops']['skeleton_horde'])
 
 #clan = getClan(tag='2CQQVQCU', refresh=False)
-#print(clan)
-#print(getChestCycle(tag='PL2UV8j', refresh=False))
